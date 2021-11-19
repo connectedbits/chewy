@@ -102,6 +102,14 @@ module Chewy
           end
         end
 
+        def effective_minimum_should_match
+          if value.minimum_should_match.nil?
+            1 if value.must.empty? && value.should.present?
+          else
+            value.minimum_should_match
+          end
+        end
+
         # Directly modifies `must` array of the root `bool` query.
         # Pushes the passed query to the end of the array.
         #
@@ -109,7 +117,7 @@ module Chewy
         # @param other_value [Hash, Array] any acceptable storage value
         # @return [{Symbol => Array<Hash>}]
         def must(other_value)
-          update!(must: other_value)
+          update!(must: other_value, minimum_should_match: effective_minimum_should_match)
         end
 
         # Directly modifies `should` array of the root `bool` query.

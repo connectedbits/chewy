@@ -228,6 +228,30 @@ shared_examples :query_storage do |param_name|
           .to(must: [{foo: 'bar'}], should: [], must_not: [{moo: 'baz'}], minimum_should_match: nil)
       end
     end
+
+    context do
+      subject { described_class.new(must: {foo: 'bar'}) }
+
+      # ORing a new MUST can turn them both into SHOULDS with implicit MINIMUM_SHOULD_MATCH = 1
+      specify do
+        expect { subject.or(must: {moo: 'baz'}) }
+          .to change { subject.value.to_h }
+          .from(must: [{foo: 'bar'}], should: [], must_not: [], minimum_should_match: nil)
+          .to(must: [], should: [{foo: 'bar'}, {moo: 'baz'}], must_not: [], minimum_should_match: nil)
+      end
+    end
+
+    context do
+      subject { described_class.new(should: [{foo: 'bar'}, {moo: 'baz'}]) }
+
+      # MUSTing into SHOULDS which are presently an OR should add explicit MINIMUM_SHOULD_MATCH
+      specify do
+        expect { subject.must(gee: 'wiz') }
+          .to change { subject.value.to_h }
+          .from(must: [], should: [{foo: 'bar'}, {moo: 'baz'}], must_not: [], minimum_should_match: nil)
+          .to(must: [{gee: 'wiz'}], should: [{foo: 'bar'}, {moo: 'baz'}], must_not: [], minimum_should_match: 1)
+      end
+    end
   end
 
   describe '#replace!' do
