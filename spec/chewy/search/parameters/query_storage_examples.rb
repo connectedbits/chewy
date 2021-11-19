@@ -144,7 +144,7 @@ shared_examples :query_storage do |param_name|
         .to change { subject.value.to_h }
         .from(must: [{foo: 'bar'}], should: [{moo: 'baz'}], must_not: [], minimum_should_match: nil)
         .to(must: [], should: [{bool: {must: {foo: 'bar'}, should: {moo: 'baz'}}},
-                               {moo: 'baz'}], must_not: [], minimum_should_match: nil)
+                               {moo: 'baz'}], must_not: [], minimum_should_match: 1)
     end
 
     specify do
@@ -152,7 +152,7 @@ shared_examples :query_storage do |param_name|
         .to change { subject.value.to_h }
         .from(must: [{foo: 'bar'}], should: [{moo: 'baz'}], must_not: [], minimum_should_match: nil)
         .to(must: [], should: [{bool: {must: {foo: 'bar'}, should: {moo: 'baz'}}},
-                               bool: {must: [{moo: 'baz'}, {doo: 'scooby'}]}], must_not: [], minimum_should_match: nil)
+                               bool: {must: [{moo: 'baz'}, {doo: 'scooby'}]}], must_not: [], minimum_should_match: 1)
     end
 
     specify do
@@ -166,7 +166,7 @@ shared_examples :query_storage do |param_name|
         .to change { subject.value.to_h }
         .from(must: [{foo: 'bar'}], should: [{moo: 'baz'}], must_not: [], minimum_should_match: nil)
         .to(must: [], should: [{bool: {must: {foo: 'bar'}, should: {moo: 'baz'}}},
-                               {bool: {should: {foo: 'bar'}}}], must_not: [], minimum_should_match: nil)
+                               {bool: {should: {foo: 'bar'}}}], must_not: [], minimum_should_match: 1)
     end
 
     context do
@@ -176,7 +176,7 @@ shared_examples :query_storage do |param_name|
         expect { subject.or(moo: 'baz') }
           .to change { subject.value.to_h }
           .from(must: [{foo: 'bar'}], should: [], must_not: [], minimum_should_match: nil)
-          .to(must: [], should: [{foo: 'bar'}, {moo: 'baz'}], must_not: [], minimum_should_match: nil)
+          .to(must: [], should: [{foo: 'bar'}, {moo: 'baz'}], must_not: [], minimum_should_match: 1)
       end
     end
   end

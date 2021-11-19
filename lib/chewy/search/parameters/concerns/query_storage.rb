@@ -157,7 +157,7 @@ module Chewy
         # @param other_value [Hash, Array] any acceptable storage value
         # @return [{Symbol => Array<Hash>}]
         def or(other_value)
-          join_into(:should, other_value)
+          join_into(:should, other_value, minimum_should_match: 1)
         end
 
         # Basically, an alias for {#must_not}.
@@ -211,11 +211,11 @@ module Chewy
 
       private
 
-        def join_into(place, other_value)
+        def join_into(place, other_value, extra = {})
           values = [value, normalize(other_value)]
           queries = values.map(&:query)
           if queries.all?
-            replace!(place => queries)
+            replace!({place => queries}.merge(extra))
           elsif queries.none?
             @value
           else

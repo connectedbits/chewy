@@ -457,9 +457,10 @@ describe Chewy::Search::Request do
         expect(first_scope.or(second_scope).render[:body]).to eq(
           query: {bool: {
             should: [{foo: 'bar'}, {bool: {must_not: {boo: 'baf'}}}],
-            filter: {bool: {should: [{bool: {should: {moo: 'baz'}}}, {foo: 'bar'}]}}
+            filter: {bool: {should: [{bool: {should: {moo: 'baz'}}}, {foo: 'bar'}], minimum_should_match: 1}},
+            minimum_should_match: 1
           }},
-          post_filter: {bool: {should: [{bool: {must_not: {boo: 'baf'}}}, {bool: {should: {moo: 'baz'}}}]}},
+          post_filter: {bool: {should: [{bool: {must_not: {boo: 'baf'}}}, {bool: {should: {moo: 'baz'}}}], minimum_should_match: 1}},
           size: 10
         )
       end

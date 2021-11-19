@@ -62,15 +62,15 @@ describe Chewy::Search::QueryProxy do
     specify { expect { subject.or }.to raise_error ArgumentError }
     specify do
       expect(subject.or(multi_match: {foo: 'bar'}).render[:body])
-        .to eq(query: {bool: {should: [{match: {foo: 'bar'}}, {multi_match: {foo: 'bar'}}]}})
+        .to eq(query: {bool: {should: [{match: {foo: 'bar'}}, {multi_match: {foo: 'bar'}}], minimum_should_match: 1}})
     end
     specify do
       expect(subject.or(multi_match: {foo: 'bar'}).render[:body])
-        .to eq(query: {bool: {should: [{match: {foo: 'bar'}}, {multi_match: {foo: 'bar'}}]}})
+        .to eq(query: {bool: {should: [{match: {foo: 'bar'}}, {multi_match: {foo: 'bar'}}], minimum_should_match: 1}})
     end
     specify do
       expect(subject.or(scope).render[:body])
-        .to eq(query: {bool: {should: [{match: {foo: 'bar'}}, {bool: {must_not: {match: {foo: 'bar'}}}}]}})
+        .to eq(query: {bool: {should: [{match: {foo: 'bar'}}, {bool: {must_not: {match: {foo: 'bar'}}}}], minimum_should_match: 1}})
     end
   end
 
