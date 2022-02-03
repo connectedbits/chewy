@@ -4,18 +4,18 @@ require 'active_support/deprecation'
 require 'active_support/json'
 require 'active_support/log_subscriber'
 
+require 'active_support/isolated_execution_state' if ActiveSupport::VERSION::MAJOR >= 7
 require 'active_support/core_ext/array/access'
 require 'active_support/core_ext/array/wrap'
 require 'active_support/core_ext/enumerable'
 require 'active_support/core_ext/hash/reverse_merge'
+require 'active_support/core_ext/hash/keys'
 require 'active_support/core_ext/numeric/time'
 require 'active_support/core_ext/numeric/bytes'
 require 'active_support/core_ext/object/blank'
 require 'active_support/core_ext/object/inclusion'
 require 'active_support/core_ext/string/inflections'
 
-require 'i18n/core_ext/hash'
-require 'chewy/backports/deep_dup' unless Object.respond_to?(:deep_dup)
 require 'singleton'
 require 'base64'
 
