@@ -446,6 +446,23 @@ end
 
 See the section on *Script fields* for details on calculating distance in a search.
 
+### Join fields
+
+You can use a [join field](https://www.elastic.co/guide/en/elasticsearch/reference/current/parent-join.html)
+to implement parent-child relationships between documents.
+It [replaces the old `parent_id` based parent-child mapping](https://www.elastic.co/guide/en/elasticsearch/reference/current/removal-of-types.html#parent-child-mapping-types)
+
+To use it, you need to pass `relations` and `join` (with `type` and `id`) options:
+```ruby
+field :hierarchy_link, type: :join, relations: {question: %i[answer comment], answer: :vote, vote: :subvote}, join: {type: :comment_type, id: :commented_id}
+```
+assuming you have `comment_type` and `commented_id` fields in your model.
+
+Note that when you reindex a parent, it's children and grandchildren will be reindexed as well.
+This may require additional queries to the primary database and to elastisearch.
+
+Also note that the join field doesn't support crutches (it should be a field directly defined on the model).
+
 ### Crutches™ technology
 
 Assume you are defining your index like this (product has_many categories through product_categories):
@@ -969,7 +986,7 @@ You can query a set of indexes at once:
 CitiesIndex.indices(CountriesIndex).query(match: {name: 'Some'})
 ```
 
-See https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html and https://github.com/elastic/elasticsearch-ruby/tree/master/elasticsearch-dsl for more details.
+See https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html and https://github.com/elastic/elasticsearch-dsl-ruby for more details.
 
 An important part of requests manipulation is merging. There are 4 methods to perform it: `merge`, `and`, `or`, `not`. See [Chewy::Search::QueryProxy](lib/chewy/search/query_proxy.rb) for details. Also, `only` and `except` methods help to remove unneeded parts of the request.
 

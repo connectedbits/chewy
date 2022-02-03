@@ -8,6 +8,17 @@
 
 ### Bugs Fixed
 
+## 7.2.4 (2022-02-03)
+
+### New Features
+
+ * [#760](https://github.com/toptal/chewy/pull/760): Replace parent-child mapping with a [join field](https://www.elastic.co/guide/en/elasticsearch/reference/current/removal-of-types.html#parent-child-mapping-types) ([@mrzasa][])
+
+### Bugs Fixed
+
+ * [#825](https://github.com/toptal/chewy/issues/825): Fix mismatch argument names at update_mapping rake task ([@AgeevAndrew][])
+ * [#832](https://github.com/toptal/chewy/issues/832): Fix "cannot load such file -- `i18n/core_ext/hash`" ([@chrisandreae][])
+
 ## 7.2.3 (2021-10-29)
 
 ### New Features
@@ -634,6 +645,7 @@
   * Initial version
 
 [@0x0badc0de]: https://github.com/0x0badc0de
+[@AgeevAndrew]: https://github.com/AgeevAndrew
 [@aglushkov]: https://github.com/aglushkov
 [@AlexVPopov]: https://github.com/AlexVPopov
 [@AndreySavelyev]: https://github.com/AndreySavelyev
@@ -648,6 +660,7 @@
 [@biow0lf]: https://github.com/biow0lf
 [@Borzik]: https://github.com/Borzik
 [@caldwecr]: https://github.com/caldwecr
+[@chrisandreae]: https://github.com/chrisandreae
 [@clupprich]: https://github.com/clupprich
 [@dalthon]: https://github.com/dalthon
 [@davekaro]: https://github.com/davekaro
@@ -720,4 +733,3 @@
 [@Vitalina-Vakulchyk]: https://github.com/Vitalina-Vakulchyk
 [@webgago]: https://github.com/webgago
 [@yahooguntu]: https://github.com/yahooguntu
-
